@@ -5,13 +5,14 @@ var matches = 0;
 var tries = 0;
 var pairsLeft = 8;
 var images = [];
-var timer; 
+var timer =0; 
 var clicks = 0;
 var tile1 = null;
 var tile2 = null;
 $('#matches').text("Matches: " + matches);
 $('#tries').text("Tries so Far: " + tries);
 $('#pairsLeft').text("Pairs Left: " + pairsLeft);
+$('#timer').text("Timer: " + timer);
 
 for (var i = 1; i < 33; i++) {
 	images.push("img/tile" + i + ".jpg"); 
@@ -40,12 +41,14 @@ $("#playAgain").one("click" ,function() { // resets the game
 
 $('#game-board').one("click" ,function(){
 	var startTime = _.now();
-	var time = window.setInterval(function() {
-		timer = Math.floor((_.now() - startTime) / 1000);
-		$('#timer').html("Timer: " + timer)}, 1000);
+	timer = setInterval(function() {
+		$('#timer').text(Math.floor((_.now() - startTime) / 1000));
+		}, 1000);
+});	
+
+$('#howToPlay').one("click" ,function() {
+	window.location.href="http://www.classicgamesandpuzzles.com/Memory.html";
 })
-
-
 
 $('#game-board img').click(function() {
 	if($(this).data('flippable')) {
@@ -82,7 +85,11 @@ $('#game-board img').click(function() {
 		}
 	}
 	if (matches == 8) {
-		window.clearInterval(timer);
+		clearInterval(timer);
+		var win = window.confirm("Click here for your present!");
+		if (win == true) {
+			window.location.href = "https://www.youtube.com/watch?v=beB6nex_mHk";
+		}
 	}
 });
 
