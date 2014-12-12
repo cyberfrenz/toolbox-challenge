@@ -28,43 +28,40 @@ function createBoard() {
 		newTile.data('tileNumber', i); 
 		newTile.data('img', image); 
 		newTile.data('flippable', true)
-		gameBoard.append(newTile);
+		gameBoard.append(newTile); 
 	}
 }
 
 createBoard();
 
-$("newGame").click(function() { // resets the game
-	matches = 0;
-	tries = 0;
-	pairsLeft = 8;
-	$('#game-board').empty();
-	createBoard(); 
+$("#playAgain").one("click" ,function() { // resets the game
+	location.reload();
 })
 
 $('#game-board').one("click" ,function(){
 	var startTime = _.now();
-	window.setInterval(function() {
+	var time = window.setInterval(function() {
 		timer = Math.floor((_.now() - startTime) / 1000);
 		$('#timer').html("Timer: " + timer)}, 1000);
 })
 
+
+
 $('#game-board img').click(function() {
 	if($(this).data('flippable')) {
 	//$(this).attr('src', images[$(this).data('tileNumber')]);
-		if (tile1 === null) {
+		if (clicks == 0) {
 			tile1 = $(this);
 			clicks++;
 			tile1.data('flippable', false);
 			tile1.attr('src', images[$(this).data('tileNumber')]);
-			console.log(tile1.data());
 		} else {
 			tile2 = $(this);
 			clicks++;
 			tile2.data('flippable', false);
 			tile2.attr('src', images[$(this).data('tileNumber')]);
-			console.log(tile2.data());
 		}
+
 		if(clicks === 2) {
 			tries++;
 			if(tile1.data('img') === tile2.data('img')) {
@@ -74,18 +71,18 @@ $('#game-board img').click(function() {
 				window.setTimeout(function(){
 					tile1.data('flippable', true);
 					tile2.data('flippable', true);
+					tile1.attr('src', 'img/tile-back.png');
+					tile2.attr('src', 'img/tile-back.png');
 					}, 1000);
 			}	
-			//console.log(tile1.data());
-			tile1.attr('src', 'img/tile-back.png');
-			tile2.attr('src', 'img/tile-back.png');
-			tile1 = null;
-			tile2 = null;
 			clicks = 0;
 			$('#matches').text("Matches: " + matches);
 			$('#tries').text("Tries so Far: " + tries);
 			$('#pairsLeft').text("Pairs Left: " + pairsLeft);
 		}
+	}
+	if (matches == 8) {
+		window.clearInterval(timer);
 	}
 });
 

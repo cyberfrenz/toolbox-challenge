@@ -1,16 +1,17 @@
-#gameboard {
+#game-board {
 	max-width: 440px; 
+	
 }
 
-#gameboard img {
-	border: 2px solid #FFFFFF;
+#game-board img {
+	border: 5px solid #33CCCC;
 	max-width: 100px;
 	padding: 2px;
 	margin: 1px;
 }
 
 img {
-	border: 2px solid #FFFFFF;
+	border: 2px solid #CC0099;
 	max-width: 100px;
 	padding: 2px;
 	margin: 1px;
